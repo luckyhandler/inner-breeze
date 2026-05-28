@@ -1,20 +1,29 @@
-{ pkgs ? import <nixpkgs> { 
-    config = { 
+{ pkgs ? import <nixpkgs> {
+    config = {
       android_sdk.accept_license = true;
       allowUnfree = true;
-    }; 
+    };
   }
 }:
 
 let
+  # Use Flutter 3.24.0 for compatibility with Kotlin 1.9.20
+  flutter = pkgs.flutter.overrideAttrs (oldAttrs: rec {
+    version = "3.24.0";
+    src = pkgs.fetchurl {
+      url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.0-stable.tar.xz";
+      hash = "sha256-0000000000000000000000000000000000000000000000000000=";
+    };
+  });
+
   androidComposition = pkgs.androidenv.composeAndroidPackages {
     cmdLineToolsVersion = "9.0";
     toolsVersion = "26.1.1";
     platformToolsVersion = "35.0.1";
-    buildToolsVersions = [ "30.0.3" "33.0.0" ]; 
+    buildToolsVersions = [ "30.0.3" "33.0.0" ];
     includeEmulator = false;
-    emulatorVersion = "32.1.15"; 
-    platformVersions = [ "28" "29" "30" "33" ]; 
+    emulatorVersion = "32.1.15";
+    platformVersions = [ "28" "29" "30" "33" ];
     includeSources = false;
     includeSystemImages = false;
     systemImageTypes = [ "google_apis_playstore" ];

@@ -20,7 +20,7 @@ dependencies:
   table_calendar: ^3.0.9
   provider: ^6.0.0
   go_router: ^14.2.7
-  syncfusion_flutter_sliders: ^33.2.8
+  syncfusion_flutter_sliders: ^20.4.48
   uuid: ^4.2.2
   intl: ^0.20.2
   url_launcher: ^6.0.0
