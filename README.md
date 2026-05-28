@@ -1,3 +1,15 @@
+# ⚠️ Legacy Repository - Inner Breeze
+
+> **This is the legacy Flutter version of Inner Breeze.**
+> This version is no longer actively maintained.
+>
+> **Current versions:**
+> - **Website:** https://inbe.waozi.xyz/
+> - **New repo:** https://github.com/waozixyz/inbe
+> - **F-Droid:** https://f-droid.org/packages/xyz.waozi.inbe/
+
+---
+
 # Inner Breeze
 
 Guided breathing meditation app inspired by the Wim Hof Method. Experience tranquility in every breath and discover the power of conscious breathing with Inner Breeze.
@@ -23,8 +35,8 @@ curl -fsSL https://fvm.app/install.sh | bash
 
 2. Clone the Inner Breeze repository:
 ```
-git clone https://github.com/naoxio/inbreeze.git
-cd inbreeze
+git clone https://github.com/waozixyz/inbe-legacy.git
+cd inbe-legacy
 ```
 
 3. Use FVM to install and set up Flutter:

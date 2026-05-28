@@ -21,24 +21,46 @@ bool isOldDomain() {
   return false;
 }
 
-class MigrationInstructionsModal extends StatelessWidget {
+class DeprecationModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Data Migration Instructions'),
+      title: Text('⚠️ Legacy Version Notice'),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('To migrate your data to the new version:'),
+            Text('This Flutter version is no longer actively maintained.'),
             SizedBox(height: 10),
-            Text('1. Go to Settings'),
-            Text('2. Tap on "Export Data"'),
-            Text('3. Save the exported file'),
-            Text('4. Open the new version of the app at:'),
-            Text('https://v1.inbreeze.xyz', style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('5. In the new version, go to Settings'),
-            Text('6. Tap on "Import Data"'),
-            Text('7. Select the file you exported from this version'),
+            Text('A new Raylib-based version is available with:'),
+            SizedBox(height: 5),
+            Text('• Better performance'),
+            Text('• Smaller app size'),
+            Text('• Native Android experience'),
+            SizedBox(height: 15),
+            Text('Get the new version at:'),
+            SizedBox(height: 5),
+            Row(
+              children: [
+                Icon(Icons.web, color: Colors.teal),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text('https://inbe.waozi.xyz/',
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.phone_android, color: Colors.teal),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text('F-Droid: xyz.waozi.inbe',
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -55,10 +77,10 @@ class MigrationInstructionsModal extends StatelessWidget {
 }
 
 
-class MigrationBanner extends StatelessWidget {
+class DeprecationBanner extends StatelessWidget {
   final VoidCallback onTap;
 
-  const MigrationBanner({Key? key, required this.onTap}) : super(key: key);
+  const DeprecationBanner({Key? key, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +88,21 @@ class MigrationBanner extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-        color: Color(0xFFD35400), // Dark orange color
-        child: Text(
-          'Click here for migration instructions',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        color: Color(0xFFD35400),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.warning, color: Colors.white, size: 20),
+            SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                '⚠️ Legacy Version: Tap to learn about the new Raylib version',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -93,11 +124,11 @@ class _TitleScreenState extends State<TitleScreen> {
     });
   }
 
-  void _showMigrationInstructions() {
+  void _showDeprecationNotice() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return MigrationInstructionsModal();
+        return DeprecationModal();
       },
     );
   }
@@ -105,11 +136,9 @@ class _TitleScreenState extends State<TitleScreen> {
   @override
   void initState() {
     super.initState();
-    if (isOldDomain()) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showMigrationInstructions();
-      });
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showDeprecationNotice();
+    });
   }
 
   @override
@@ -117,7 +146,7 @@ class _TitleScreenState extends State<TitleScreen> {
     return Scaffold(
       body: Column(
         children: [
-          if (isOldDomain()) MigrationBanner(onTap: _showMigrationInstructions),
+          DeprecationBanner(onTap: _showDeprecationNotice),
           Expanded(
             child: SingleChildScrollView(
               child: Center(

@@ -49,7 +49,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<String> _fetchLatestVersion() async {
     const String url =
-        'https://api.github.com/repos/naoxio/inbreeze/releases/latest';
+        'https://api.github.com/repos/waozixyz/inbe-legacy/releases/latest';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -320,7 +320,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         versionWidgets.add(TextButton(
                           onPressed: () {
                             launchUrl(Uri.parse(
-                                'https://github.com/naoxio/inbreeze/releases/tag/$_latestVersionTag'));
+                                'https://github.com/waozixyz/inbe-legacy/releases/tag/$_latestVersionTag'));
                           },
                           child: Text('update_button'.i18n()),
                         ));
@@ -344,17 +344,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   runSpacing: 15,
                   children: [
                     _buildIconLink(
-                        Icons.web, 'Website', 'https://inbreeze.xyz/'),
+                        Icons.web, 'Website', 'https://inbe.waozi.xyz/'),
                     _buildIconLink('assets/icons/github.svg', 'GitHub',
-                        'https://github.com/naoxio/inbreeze'),
+                        'https://github.com/waozixyz/inbe'),
                     _buildIconLink('assets/icons/telegram.svg', 'Telegram',
-                        'https://t.me/inner_breeze'),
-                    _buildIconLink('assets/icons/twitter.svg', 'X Page',
-                        'https://x.com/inner_breeze'),
-                    _buildIconLink(Icons.currency_bitcoin, 'Donate Crypto',
-                        'https://coindrop.to/naox'),
-                    _buildIconLink(Icons.wallet, 'Donate Fiat',
-                        'https://buy.stripe.com/cN29CM5OR1xD75e28c'),
+                        'https://t.me/lotusinbe'),
                   ],
                 ),
                 Padding(
