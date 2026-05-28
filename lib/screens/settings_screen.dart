@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inner_breeze/widgets/breeze_bottom_nav.dart';
@@ -15,9 +14,7 @@ import 'package:inner_breeze/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:inner_breeze/models/preferences.dart';
 import 'package:intl/intl.dart';
-import 'package:file_saver/file_saver.dart';
-
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 class SettingsScreen extends StatefulWidget {
@@ -147,24 +144,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _importData() async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-    final result = await FilePicker.platform.pickFiles();
-    if (result != null && result.files.single.path != null) {
-      try {
-        final file = File(result.files.single.path!);
-        final jsonString = await file.readAsString();
-        final data = jsonDecode(jsonString);
-
-        await userProvider.importData(data);
-
-        _showSnackBar('data_imported_success'.i18n());
-      } catch (e) {
-        _showSnackBar('error_importing_data'.i18n() + e.toString());
-      }
-    } else {
-      _showSnackBar('import_cancelled'.i18n());
-    }
+    _showSnackBar('import_not_available'.i18n());
   }
 
   Future<void> _exportData() async {
@@ -178,27 +158,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
       String fileName = 'InnerBreeze_$formattedDate.json';
       Uint8List bytes = Uint8List.fromList(utf8.encode(jsonString));
 
-      // Try saving with a different method for Android
-      String? filePath = await FileSaver.instance.saveAs(
-        name: fileName,
-        bytes: bytes,
-        ext: 'json',
-        mimeType: MimeType.json,
-      );
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath = '${directory.path}/$fileName';
+      final file = File(filePath);
+      await file.writeAsBytes(bytes);
 
-      if (filePath != null) {
-        _showSnackBar('${'data_exported_success'.i18n()} to: $filePath');
-      } else {
-        _showSnackBar('${'error_exporting_data'.i18n()}: File path is null');
-      }
+      _showSnackBar('${'data_exported_success'.i18n()} to: $filePath');
     } catch (e) {
       _showSnackBar('${'error_exporting_data'.i18n()}: $e');
     }
   }
 
   Future<String> _getAppVersion() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
-    return info.version;
+    return '1.5.0';
   }
 
   void _showSnackBar(String message) {

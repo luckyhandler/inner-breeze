@@ -4,7 +4,6 @@ import 'package:inner_breeze/providers/user_provider.dart';
 import 'package:inner_breeze/widgets/centered_max_width_widget.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
-import 'package:window_manager/window_manager.dart';
 import 'router/router.dart';
 import 'utils/platform_checker.dart';
 
@@ -22,28 +21,7 @@ void run() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  if (isDesktop()) {
-    await windowManager.ensureInitialized();
-
-    WindowOptions windowOptions = WindowOptions(
-      size: Size(420, 620),
-      center: true,
-      title: title,
-      backgroundColor: Colors.transparent,
-      skipTaskbar: false,
-      titleBarStyle: TitleBarStyle.normal,
-    );
-
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.show();
-      await windowManager.focus();
-
-      run();
-    });
-  } else {
-    run();
-  }
+  run();
 }
 
 final _darkTheme = ThemeData.from(
@@ -75,9 +53,7 @@ class AppState extends State<App> {
   void initState() {
     super.initState();
     initializeLocale();
-    if (!isDesktop()) {
-      _preloadAssets(context);
-    }
+    _preloadAssets(context);
   }
 
   Future<void> initializeLocale() async {

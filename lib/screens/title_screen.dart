@@ -6,18 +6,8 @@ import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:inner_breeze/providers/user_provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:universal_html/html.dart' if (dart.library.html) 'dart:html' as html;
 
 bool isOldDomain() {
-  if (kIsWeb) {
-    try {
-      final currentUrl = html.window.location.href;
-      return currentUrl.contains('web.inner-breeze.app');
-    } catch (e) {
-      print('Error checking domain: $e');
-      return false;
-    }
-  }
   return false;
 }
 

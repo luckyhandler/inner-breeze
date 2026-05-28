@@ -45,6 +45,11 @@ pkgs.mkShell {
     dbus
     gdk-pixbuf
     glib
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-libav
     gtk3
     libdatrie
     libepoxy
@@ -55,6 +60,9 @@ pkgs.mkShell {
     ninja
     pcre
     pkg-config
+    pango
+    cairo
+    harfbuzz
     sysprof
     xorg.libX11
     xorg.libXcursor
@@ -91,6 +99,9 @@ pkgs.mkShell {
       pango
       cairo
       harfbuzz
+      gst_all_1.gstreamer
+      gst_all_1.gst-plugins-base
+      gst_all_1.gst-plugins-good
     ])}:$LD_LIBRARY_PATH
     
     # Explicitly set compiler paths to avoid system leakage
@@ -104,7 +115,13 @@ pkgs.mkShell {
       glib
     ])}:$LIBRARY_PATH
 
-    # Ensure sysprof-capture-4.pc is found
-    export PKG_CONFIG_PATH=${pkgs.sysprof.dev}/lib/pkgconfig:$PKG_CONFIG_PATH
+    # Ensure sysprof-capture-4.pc and other pkg-config files are found
+    export PKG_CONFIG_PATH=${pkgs.lib.makeSearchPathOutput "dev" "lib/pkgconfig" (with pkgs; [
+      sysprof
+      glib
+      gtk3
+      gst_all_1.gstreamer
+      gst_all_1.gst-plugins-base
+    ])}:$PKG_CONFIG_PATH
   '';
 }
