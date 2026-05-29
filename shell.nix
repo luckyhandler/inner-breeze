@@ -7,12 +7,12 @@
 }:
 
 let
-  # Use Flutter 3.24.0 for compatibility with Kotlin 1.9.20
+  # Use Flutter 3.27.0 for Dart >=3.10.0 compatibility
   flutter = pkgs.flutter.overrideAttrs (oldAttrs: rec {
-    version = "3.24.0";
+    version = "3.27.0";
     src = pkgs.fetchurl {
-      url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.0-stable.tar.xz";
-      hash = "sha256-1wi16v9zj63sn0hsla4n7nshbyvz1zz03k0win3cz2vxy495sanm=";
+      url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.27.0-stable.tar.xz";
+      hash = "sha256-0hfm151jqd6vm9pb4bnn7zfsy2vy9gl7sa324zac9mv1rhrj2nf0=";
     };
   });
 
