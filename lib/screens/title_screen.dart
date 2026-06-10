@@ -5,100 +5,10 @@ import 'package:inner_breeze/widgets/breeze_bottom_nav.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:inner_breeze/providers/user_provider.dart';
-import 'package:flutter/foundation.dart';
 
 bool isOldDomain() {
   return false;
 }
-
-class DeprecationModal extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('⚠️ Legacy Version Notice'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text('This Flutter version is no longer actively maintained.'),
-            SizedBox(height: 10),
-            Text('A new Raylib-based version is available with:'),
-            SizedBox(height: 5),
-            Text('• Better performance'),
-            Text('• Smaller app size'),
-            Text('• Native Android experience'),
-            SizedBox(height: 15),
-            Text('Get the new version at:'),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Icon(Icons.web, color: Colors.teal),
-                SizedBox(width: 8),
-                Expanded(
-                  child: Text('https://inbe.waozi.xyz/',
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(Icons.phone_android, color: Colors.teal),
-                SizedBox(width: 8),
-                Expanded(
-                  child: Text('F-Droid: xyz.waozi.inbe',
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.teal),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          child: Text('Got it'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    );
-  }
-}
-
-
-class DeprecationBanner extends StatelessWidget {
-  final VoidCallback onTap;
-
-  const DeprecationBanner({Key? key, required this.onTap}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        color: Color(0xFFD35400),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.warning, color: Colors.white, size: 20),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                '⚠️ Legacy Version: Tap to learn about the new Raylib version',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 
 class TitleScreen extends StatefulWidget {
   @override
@@ -114,29 +24,11 @@ class _TitleScreenState extends State<TitleScreen> {
     });
   }
 
-  void _showDeprecationNotice() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return DeprecationModal();
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _showDeprecationNotice();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          DeprecationBanner(onTap: _showDeprecationNotice),
           Expanded(
             child: SingleChildScrollView(
               child: Center(
@@ -159,11 +51,11 @@ class _TitleScreenState extends State<TitleScreen> {
                       style: OutlinedButton.styleFrom(
                         minimumSize: Size(180, 60),
                       ),
+                      onPressed: _navigateToExercise,
                       child: Text(
                         "start_button".i18n(),
                         style: BreezeStyle.bodyBig,
                       ),
-                      onPressed: _navigateToExercise,
                     ),
                   ],
                 ),

@@ -5,7 +5,6 @@ import 'package:inner_breeze/widgets/centered_max_width_widget.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'router/router.dart';
-import 'utils/platform_checker.dart';
 
 const String title = 'Inner Breeze';
 final GlobalKey<AppState> appKey = GlobalKey();
@@ -47,18 +46,23 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   Locale _currentLocale;
+  bool _assetsPreloaded = false;
+
   AppState() : _currentLocale = Locale('en');
 
   @override
   void initState() {
     super.initState();
     initializeLocale();
-    _preloadAssets(context);
   }
 
   Future<void> initializeLocale() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     String languageCode = await userProvider.getLanguagePreference();
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       _currentLocale = Locale(languageCode);
     });
@@ -93,8 +97,7 @@ class AppState extends State<App> {
       routerConfig: router,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
         LocalJsonLocalization.delegate,
       ],
       supportedLocales: [
@@ -114,6 +117,15 @@ class AppState extends State<App> {
       darkTheme: _darkTheme,
       themeMode: ThemeMode.dark,
       builder: (context, child) {
+        if (!_assetsPreloaded) {
+          _assetsPreloaded = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              _preloadAssets(context);
+            }
+          });
+        }
+
         var backgroundColor = Theme.of(context).colorScheme.surface;
 
         return Container(
