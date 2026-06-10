@@ -49,9 +49,9 @@ class AnimatedCircleState extends State<AnimatedCircle>
           }
           if (status == AnimationStatus.forward) {
             audioPlayerService.play(
-                'assets/sounds/breath-in.ogg', widget.volume.toDouble(), 'in');
+                'assets/sounds/breath-in.m4a', widget.volume.toDouble(), 'in');
           } else if (status == AnimationStatus.reverse) {
-            audioPlayerService.play('assets/sounds/breath-out.ogg',
+            audioPlayerService.play('assets/sounds/breath-out.m4a',
                 widget.volume.toDouble(), 'out');
           }
         } catch (error) {
@@ -89,9 +89,11 @@ class AnimatedCircleState extends State<AnimatedCircle>
         switch (control) {
           case 'repeat':
             if (_controller.status == AnimationStatus.forward ||
-                _controller.status == AnimationStatus.reverse) break;
+                _controller.status == AnimationStatus.reverse) {
+              break;
+            }
             if (_controller.status == AnimationStatus.dismissed) {
-              audioPlayerService.play('assets/sounds/breath-in.ogg',
+              audioPlayerService.play('assets/sounds/breath-in.m4a',
                   widget.volume.toDouble(), 'in');
             }
             _controller.forward();

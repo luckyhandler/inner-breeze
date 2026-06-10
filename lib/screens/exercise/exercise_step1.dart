@@ -114,7 +114,7 @@ class _ExerciseStep1State extends State<ExerciseStep1> {
         });
         if (breathsDone == maxBreaths && timer.tick % 2 == 0) {
           audioPlayerService.play(
-              'assets/sounds/bell.ogg', volume * 0.8, 'bell');
+              'assets/sounds/bell.m4a', volume * 0.8, 'bell');
         }
         if (breathsDone > maxBreaths) {
           animationControl = 'stop';
