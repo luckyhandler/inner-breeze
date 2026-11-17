@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unreleased]
+- Upgrade to Flutter 3.50.0 / Dart 3.14.0 and refresh all dependencies
+- Migrate to the standalone `material_ui` widgets package
+- Update Android Gradle plugin, Gradle, SDK and iOS deployment target
+- Harden Android network security to system trust anchors and HTTPS only
+- Update CI toolchain and pin release action
+
 ## [1.5.0] - 2026-05-28
 - Fix Nix shell and Android SDK versions
 - Update dependencies for compatibility with newer Flutter

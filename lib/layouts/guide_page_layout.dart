@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:inner_breeze/widgets/breeze_app_bar.dart';
 
 class PageLayout extends StatelessWidget {

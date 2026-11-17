@@ -7,12 +7,12 @@
 }:
 
 let
-  # Use Flutter 3.24.0 for compatibility with Kotlin 1.9.20
+  # Flutter 3.50.0 (stable) with Dart 3.14.0
   flutter = pkgs.flutter.overrideAttrs (oldAttrs: rec {
-    version = "3.24.0";
+    version = "3.50.0";
     src = pkgs.fetchurl {
-      url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.0-stable.tar.xz";
-      hash = "sha256-1wi16v9zj63sn0hsla4n7nshbyvz1zz03k0win3cz2vxy495sanm=";
+      url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.50.0-stable.tar.xz";
+      hash = "sha256-bqLYBv1XJprng+Z4jiqB/CbqrXgvHg0P84Yju3Zf+fU=";
     };
   });
 
@@ -20,17 +20,17 @@ let
     cmdLineToolsVersion = "9.0";
     toolsVersion = "26.1.1";
     platformToolsVersion = "35.0.1";
-    buildToolsVersions = [ "30.0.3" "33.0.0" ];
+    buildToolsVersions = [ "30.0.3" "33.0.0" "36.0.0" ];
     includeEmulator = false;
     emulatorVersion = "32.1.15";
-    platformVersions = [ "28" "29" "30" "33" ];
+    platformVersions = [ "28" "29" "30" "33" "36" "37" ];
     includeSources = false;
     includeSystemImages = false;
     systemImageTypes = [ "google_apis_playstore" ];
     abiVersions = [ "armeabi-v7a" "arm64-v8a" ];
     cmakeVersions = [ "3.22.1" ];
     includeNDK = true;
-    ndkVersions = ["25.2.9519653"];
+    ndkVersions = ["28.2.13676358"];
     useGoogleAPIs = false;
     useGoogleTVAddOns = false;
     includeExtras = [

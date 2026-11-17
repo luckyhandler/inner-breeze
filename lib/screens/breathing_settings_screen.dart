@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inner_breeze/widgets/breeze_app_bar.dart';
 import 'package:inner_breeze/widgets/breathing_configuration.dart';
