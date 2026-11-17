@@ -1,5 +1,5 @@
 import 'package:inner_breeze/shared/breeze_style.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class BreezeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

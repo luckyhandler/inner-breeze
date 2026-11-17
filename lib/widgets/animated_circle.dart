@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:inner_breeze/utils/audio_player_service.dart';
 
 class AnimatedCircle extends StatefulWidget {

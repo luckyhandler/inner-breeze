@@ -50,9 +50,10 @@ android/.env
 *.jks
 *.snap
 
-# FVM Version Cache
 dist
 target
-.fvm
 !.fvm/fvm_config.json
 src-tauri
+
+# FVM Version Cache
+.fvm/

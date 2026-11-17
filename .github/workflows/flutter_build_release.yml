@@ -7,22 +7,17 @@ on:
     tags:
       - '*'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
 env:
-  FLUTTER_VERSION: '3.24.0'
+  FLUTTER_VERSION: '3.50.0'
   IS_PRERELEASE: ${{ startsWith(github.ref, 'refs/tags/') && 'false' || 'true' }}
   RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest' }}
 
 jobs:
-  cancel:
-    name: Cancel Previous Runs
-    runs-on: ubuntu-latest
-    steps:
-    - uses: styfle/cancel-workflow-action@0.9.1
-      with:
-        access_token: ${{ github.token }}
-        
   android:
-    needs: cancel
     name: Build APK
     runs-on: ubuntu-latest
     env:
@@ -31,12 +26,12 @@ jobs:
       FLUTTER_STORE_PASSWORD: ${{ secrets.FLUTTER_STORE_PASSWORD }}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive 
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'temurin'  # or 'zulu', depending on your preference
         java-version: '17'
@@ -77,12 +72,11 @@ jobs:
           build/app/outputs/flutter-apk/InnerBreeze.apk
 
   linux:
-    needs: cancel
     name: Build Linux
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Cache Flutter SDK
       uses: actions/cache@v4
@@ -198,7 +192,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
   
     - name: Download APK Artifact
       uses: actions/download-artifact@v4
@@ -214,7 +208,7 @@ jobs:
     
     
     - name: Create Release and Upload Builds
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: "marvinpinto/action-automatic-releases@d68defdd11f9dcc7f52f35c1b7c236ee7513bcc1" # v1
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "${{ env.RELEASE_TAG }}"

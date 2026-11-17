@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:inner_breeze/providers/user_provider.dart';
 import 'package:inner_breeze/widgets/centered_max_width_widget.dart';
 import 'package:localization/localization.dart';
